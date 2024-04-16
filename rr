@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_BOOKS 100
+#define TITLE_LENGTH 50
+
+// Function prototypes
+int findBook(char title[][TITLE_LENGTH], char targetTitle[]);
+void addBook(char title[][TITLE_LENGTH], int* numBooks);
+void removeBook(char title[][TITLE_LENGTH], int* numBooks);
+void displayBooks(char title[][TITLE_LENGTH], int numBooks);
+int stringLength(const char *str);
+void stringCopy(char *dest, const char *src);
+void stringConcatenate(char *dest, const char *src);
+int stringCompare(const char *str1, const char *str2);
+void stringReverse(char *str);
+
+int main() {
+    char title[MAX_BOOKS][TITLE_LENGTH];
+    int numBooks = 0;
+    int choice;
+
+    while (1) {
+        printf("\nLIBRARY MANAGEMENT SYSTEM\n");
+        printf("1. Add Book\n");
+        printf("2. Remove Book\n");
+        printf("3. Display Books\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        while(getchar() != '\n');
+
+        switch (choice) {
+            case 1: addBook(title, &numBooks); break;
+            case 2: removeBook(title, &numBooks); break;
+            case 3: displayBooks(title, numBooks); break;
+            case 4: printf("Exiting...\n"); return 0;
+            default: printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
+
+int findBook(char title[][TITLE_LENGTH], char targetTitle[]) {
+    for (int i = 0; i < MAX_BOOKS; i++) {
+        if (strcmp(title[i], targetTitle) == 0) return i;
+    }
+    return -1;
+}
+
+void addBook(char title[][TITLE_LENGTH], int* numBooks) {
+    if (*numBooks == MAX_BOOKS) {
+        printf("Library is full!\n");
+        return;
+    }
+
+    printf("Enter book title: ");
+    scanf(" %[^\n]s", title[*numBooks]);
+    (*numBooks)++;
+    printf("Book added successfully!\n");
+}
+
+void removeBook(char title[][TITLE_LENGTH], int* numBooks) {
+    if (*numBooks == 0) {
+        printf("Library is empty!\n");
+        return;
+    }
+
+    char targetTitle[TITLE_LENGTH];
+    printf("Enter title of book to remove: ");
+    scanf(" %[^\n]s", targetTitle);
+
+    int index = findBook(title, targetTitle);
+    if (index == -1) {
+        printf("Book not found!\n");
+        return;
+    }
+
+    for (int i = index; i < *numBooks; i++) strcpy(title[i], title[i + 1]);
+    (*numBooks)--;
+    printf("Book removed successfully!\n");
+}
+
+void displayBooks(char title[][TITLE_LENGTH], int numBooks) {
+    if (numBooks == 0) {
+        printf("Library is empty!\n");
+        return;
+    }
+
+    printf("\nList of Books:\n");
+    for (int i = 0; i < numBooks; i++) printf("%d. %s\n", i + 1, title[i]);
+}
+
+int stringLength(const char *str) {
+    int len = 0;
+    while (str[len] != '\0') {
+        len++;
+    }
+    return len;
+}
+
+void stringCopy(char *dest, const char *src) {
+    while ((*dest++ = *src++) != '\0');
+}
+
+void stringConcatenate(char *dest, const char *src) {
+    while (*dest != '\0') {
+        dest++;
+    }
+    while ((*dest++ = *src++) != '\0');
+}
+
+int stringCompare(const char *str1, const char *str2) {
+    while (*str1 && *str2 && *str1 == *str2) {
+        str1++;
+        str2++;
+    }
+    return *str1 - *str2;
+}
+
+void stringReverse(char *str) {
+    int len = stringLength(str);
+    for (int i = 0; i < len / 2; i++) {
+        char temp = str[i];
+        str[i] = str[len - i - 1];
+        str[len - i - 1] = temp;
+    }
+}
