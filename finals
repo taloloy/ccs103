@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_BOOKS 100
 
 // Function prototypes (excluding main)
+int MAX_BOOKS = 50;
 int findBook(char title[MAX_BOOKS][50], char targetTitle[50]);
 void addBook(char title[MAX_BOOKS][50], int* numBooks);
 void removeBook(char title[MAX_BOOKS][50], int* numBooks);
@@ -66,7 +66,7 @@ void addBook(char title[MAX_BOOKS][50], int* numBooks) {
     }
 
     printf("Enter book title: ");
-    scanf(" %[^\n]s", title[*numBooks]); // Read until newline, avoiding buffer issues
+    scanf(" %s", title[*numBooks]); // Read until newline, avoiding buffer issues
 
     (*numBooks)++;
     printf("Book added successfully!\n");
@@ -75,13 +75,14 @@ void addBook(char title[MAX_BOOKS][50], int* numBooks) {
 // Function to remove a book (uses string functions for comparison)
 void removeBook(char title[MAX_BOOKS][50], int* numBooks) {
     if (*numBooks == 0) {
+    	
         printf("Library is empty!\n");
         return;
     }
 
     char targetTitle[50];
     printf("Enter title of book to remove: ");
-    scanf(" %[^\n]s", targetTitle); // Read until newline, avoiding buffer issues
+    scanf("%s", targetTitle); // Read until newline, avoiding buffer issues
 
     int index = findBook(title, targetTitle);
     if (index == -1) {
