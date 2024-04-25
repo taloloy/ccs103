@@ -11,23 +11,29 @@ void addBook(char title[maxBooks][titleName], char author[maxBooks][authorName],
 void removeBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks);
 void displayBooks(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks);
 int isLibraryFull(int numBooks);
+void firstLetter(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks, char letter);
+void shortestTitle(char title[maxBooks][titleName], int numBooks);
+void longestTitle(char title[maxBooks][titleName], int numBooks);
 
 int main() {
-	
+
     char title[maxBooks][titleName]; // Array to store book titles
     char author[maxBooks][authorName]; // Array to store book authors
     int numBooks = 0; // Number of books
 
     int choice;
-    
+
     // menu
     while (1) {
         printf("\nLIBRARY MANAGEMENT SYSTEM\n");
         printf("1. Add Book\n");
         printf("2. Remove Book\n");
         printf("3. Display Books\n");
-        printf("4. Exit\n");
-        printf("Enter your choice (1-4): ");
+        printf("4. Find Books by First Letter\n");
+        printf("5. Find Shortest Title\n");
+        printf("6. Find Longest Title\n");
+        printf("7. Exit\n");
+        printf("Enter your choice (1-7): ");
         scanf("%d", &choice);
 
         while(getchar() != '\n');
@@ -43,10 +49,24 @@ int main() {
                 displayBooks(title, author, numBooks);
                 break;
             case 4:
+                {
+                    char letter;
+                    printf("Enter the first letter of the titles you want to find: ");
+                    scanf(" %c", &letter);
+                    firstLetter(title, author, numBooks, letter);
+                }
+                break;
+            case 5:
+                shortestTitle(title, numBooks);
+                break;
+            case 6:
+                longestTitle(title, numBooks);
+                break;
+            case 7:
                 printf("Exiting...\n");
                 return 0;
             default:
-                printf("Invalid choice! Please enter a number between 1 and 4.\n");
+                printf("Invalid choice! Please enter a number between 1 and 7.\n");
         }
     }
 
@@ -122,4 +142,48 @@ void displayBooks(char title[maxBooks][titleName], char author[maxBooks][authorN
 // Function to check if the library is full
 int isLibraryFull(int numBooks) {
     return numBooks == maxBooks;
+}
+
+// Function to find books by the first letter of their titles
+void firstLetter(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks, char letter) {
+    int found = 0;
+    printf("Books with titles starting with '%c':\n", letter);
+    for (int i = 0; i < numBooks; i++) {
+        if (title[i][0] == letter) {
+            printf("%d. %s - %s\n", i + 1, title[i], author[i]);
+            found = 1;
+        }
+    }
+    if (!found) {
+        printf("No books found with titles starting with '%c'.\n", letter);
+    }
+}
+
+// Function to find the shortest title among all the books
+void shortestTitle(char title[maxBooks][titleName], int numBooks) {
+    int shortT = 0;
+    int minLength = 0;
+    for (int i = 0; i < numBooks; i++) {
+        int length = strlen(title[i]);
+        if (length < minLength) {
+            minLength = length;
+            shortT = i;
+        }
+    }
+    printf("Shortest title: %s\n", title[shortT]);
+}
+
+
+// Function to find the longest title among all the books
+void longestTitle(char title[maxBooks][titleName], int numBooks) {
+    int longT = 0;
+    int maxLength = 0;
+    for (int i = 0; i < numBooks; i++) {
+        int length = strlen(title[i]);
+        if (length > maxLength) {
+            maxLength = length;
+            longT = i;
+        }
+    }
+    printf("Longest title: %s\n", title[longT]);
 }
