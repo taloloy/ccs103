@@ -19,7 +19,8 @@ int main() {
     int numBooks = 0; // Number of books
 
     int choice;
-
+    
+    // menu
     while (1) {
         printf("\nLIBRARY MANAGEMENT SYSTEM\n");
         printf("1. Add Book\n");
