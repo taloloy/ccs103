@@ -1,31 +1,27 @@
 #include <stdio.h>
 #include <string.h>
 
-#define maxBooks 50
-#define titleName 50
-#define authorName 30
-
 // Function prototypes
-int findBook(char title[maxBooks][titleName], char author[maxBooks][authorName], char targetTitle[titleName]);
-void addBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks);
-void removeBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks);
-void displayBooks(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks);
+int findBook(char title[50][50], char author[50][30], char enteredTitle[50]);
+void addBook(char title[50][50], char author[50][30], int* numBooks);
+void removeBook(char title[50][50], char author[50][30], int* numBooks);
+void displayBooks(char title[50][50], char author[50][30], int numBooks);
 int isLibraryFull(int numBooks);
-void firstLetter(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks, char letter);
-void shortestTitle(char title[maxBooks][titleName], int numBooks);
-void longestTitle(char title[maxBooks][titleName], int numBooks);
+void firstLetter(char title[50][50], char author[50][30], int numBooks, char letter);
+void shortestTitle(char title[50][50], int numBooks);
+void longestTitle(char title[50][50], int numBooks);
 
 int main() {
 
-    char title[maxBooks][titleName]; // Array to store book titles
-    char author[maxBooks][authorName]; // Array to store book authors
+    char title[50][50]; // Array to store book titles
+    char author[50][30]; // Array to store book authors
     int numBooks = 0; // Number of books
 
     int choice;
 
     // menu
     while (1) {
-        printf("\nLIBRARY MANAGEMENT SYSTEM\n");
+        printf("\n\tGIZMO'S LIBRARY\n");
         printf("1. Add Book\n");
         printf("2. Remove Book\n");
         printf("3. Display Books\n");
@@ -74,9 +70,9 @@ int main() {
 }
 
 // Function to find a book by title (uses string comparison)
-int findBook(char title[maxBooks][titleName], char author[maxBooks][authorName], char targetTitle[titleName]) {
-    for (int i = 0; i < maxBooks; i++) {
-        if (strcmp(title[i], targetTitle) == 0) {
+int findBook(char title[50][50], char author[50][30], char enteredTitle[50]) {
+    for (int i = 0; i < 50; i++) {
+        if (strcmp(title[i], enteredTitle) == 0) {
             return i; //if Book found
         }
     }
@@ -84,7 +80,7 @@ int findBook(char title[maxBooks][titleName], char author[maxBooks][authorName],
 }
 
 // Function to add a book
-void addBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks) {
+void addBook(char title[50][50], char author[50][30], int* numBooks) {
     if (isLibraryFull(*numBooks)) {
         printf("Sorry, the library is full! Cannot add more books.\n");
         return;
@@ -101,17 +97,17 @@ void addBook(char title[maxBooks][titleName], char author[maxBooks][authorName],
 }
 
 // Function to remove a book
-void removeBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks) {
+void removeBook(char title[50][50], char author[50][30], int* numBooks) {
     if (*numBooks == 0) {
         printf("The library is empty! No books to remove.\n");
         return;
     }
 
-    char targetTitle[titleName];
+    char enteredTitle[50];
     printf("Enter the title of the book to remove: ");
-    gets(targetTitle);
+    gets(enteredTitle);
 
-    int book = findBook(title, author, targetTitle);
+    int book = findBook(title, author, enteredTitle);
     if (book == -1) {
         printf("Book not found in the library!\n");
         return;
@@ -127,7 +123,7 @@ void removeBook(char title[maxBooks][titleName], char author[maxBooks][authorNam
 }
 
 // Function to display all books in the library
-void displayBooks(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks) {
+void displayBooks(char title[50][50], char author[50][30], int numBooks) {
     if (numBooks == 0) {
         printf("The library is empty! No books to display.\n");
         return;
@@ -141,11 +137,12 @@ void displayBooks(char title[maxBooks][titleName], char author[maxBooks][authorN
 
 // Function to check if the library is full
 int isLibraryFull(int numBooks) {
-    return numBooks == maxBooks;
+    return numBooks == 50;
 }
 
 // Function to find books by the first letter of their titles
-void firstLetter(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks, char letter) {
+void firstLetter(char title[50][50], char author[50][30
+], int numBooks, char letter) {
     int found = 0;
     printf("Books with titles starting with '%c':\n", letter);
     for (int i = 0; i < numBooks; i++) {
@@ -160,9 +157,9 @@ void firstLetter(char title[maxBooks][titleName], char author[maxBooks][authorNa
 }
 
 // Function to find the shortest title among all the books
-void shortestTitle(char title[maxBooks][titleName], int numBooks) {
+void shortestTitle(char title[50][50], int numBooks) {
     int shortT = 0;
-    int minLength = 0;
+    int minLength = 50;
     for (int i = 0; i < numBooks; i++) {
         int length = strlen(title[i]);
         if (length < minLength) {
@@ -175,7 +172,7 @@ void shortestTitle(char title[maxBooks][titleName], int numBooks) {
 
 
 // Function to find the longest title among all the books
-void longestTitle(char title[maxBooks][titleName], int numBooks) {
+void longestTitle(char title[50][50], int numBooks) {
     int longT = 0;
     int maxLength = 0;
     for (int i = 0; i < numBooks; i++) {
