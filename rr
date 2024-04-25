@@ -1,20 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_BOOKS 50
-#define MAX_TITLE_LENGTH 50
-#define MAX_AUTHOR_LENGTH 30
+#define maxBooks 50
+#define titleName 50
+#define authorName 30
 
 // Function prototypes
-int findBook(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX_AUTHOR_LENGTH], char targetTitle[MAX_TITLE_LENGTH]);
-void addBook(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX_AUTHOR_LENGTH], int* numBooks);
-void removeBook(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX_AUTHOR_LENGTH], int* numBooks);
-void displayBooks(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX_AUTHOR_LENGTH], int numBooks);
+int findBook(char title[maxBooks][titleName], char author[maxBooks][authorName], char targetTitle[titleName]);
+void addBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks);
+void removeBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks);
+void displayBooks(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks);
 int isLibraryFull(int numBooks);
 
 int main() {
-    char title[MAX_BOOKS][MAX_TITLE_LENGTH]; // Array to store book titles
-    char author[MAX_BOOKS][MAX_AUTHOR_LENGTH]; // Array to store book authors
+	
+    char title[maxBooks][titleName]; // Array to store book titles
+    char author[maxBooks][authorName]; // Array to store book authors
     int numBooks = 0; // Number of books
 
     int choice;
@@ -52,17 +53,17 @@ int main() {
 }
 
 // Function to find a book by title (uses string comparison)
-int findBook(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX_AUTHOR_LENGTH], char targetTitle[MAX_TITLE_LENGTH]) {
-    for (int i = 0; i < MAX_BOOKS; i++) {
+int findBook(char title[maxBooks][titleName], char author[maxBooks][authorName], char targetTitle[titleName]) {
+    for (int i = 0; i < maxBooks; i++) {
         if (strcmp(title[i], targetTitle) == 0) {
-            return i; //if Book found, return index
+            return i; //if Book found
         }
     }
-    return 0; //if Book not found
+    return -1; //if Book not found
 }
 
 // Function to add a book
-void addBook(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX_AUTHOR_LENGTH], int* numBooks) {
+void addBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks) {
     if (isLibraryFull(*numBooks)) {
         printf("Sorry, the library is full! Cannot add more books.\n");
         return;
@@ -74,18 +75,18 @@ void addBook(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX
     printf("Enter the author of the book: ");
     gets(author[*numBooks]); 
 
-    (*numBooks)++;
+    (*numBooks += 1);
     printf("Book added successfully!\n");
 }
 
 // Function to remove a book
-void removeBook(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX_AUTHOR_LENGTH], int* numBooks) {
+void removeBook(char title[maxBooks][titleName], char author[maxBooks][authorName], int* numBooks) {
     if (*numBooks == 0) {
         printf("The library is empty! No books to remove.\n");
         return;
     }
 
-    char targetTitle[MAX_TITLE_LENGTH];
+    char targetTitle[titleName];
     printf("Enter the title of the book to remove: ");
     gets(targetTitle);
 
@@ -100,12 +101,12 @@ void removeBook(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][
         strcpy(author[i], author[i + 1]);
     }
 
-    (*numBooks)--;
+    (*numBooks -= 1);
     printf("Book removed successfully!\n");
 }
 
 // Function to display all books in the library
-void displayBooks(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS][MAX_AUTHOR_LENGTH], int numBooks) {
+void displayBooks(char title[maxBooks][titleName], char author[maxBooks][authorName], int numBooks) {
     if (numBooks == 0) {
         printf("The library is empty! No books to display.\n");
         return;
@@ -119,5 +120,5 @@ void displayBooks(char title[MAX_BOOKS][MAX_TITLE_LENGTH], char author[MAX_BOOKS
 
 // Function to check if the library is full
 int isLibraryFull(int numBooks) {
-    return numBooks == MAX_BOOKS;
+    return numBooks == maxBooks;
 }
